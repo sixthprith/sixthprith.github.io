@@ -10,8 +10,15 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Caveat:wght@700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=3">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Caveat:wght@700&family=Saira+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=4">
+<meta name="theme-color" content="#0f1216">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -50,28 +57,22 @@
     </div>
 
     <figure>
-      <svg class="chart" viewBox="0 0 400 400" role="img" aria-label="Chart showing Kennedy Space Center 109 nautical miles from Gainesville on a bearing of 127 degrees">
-        <circle class="ring" cx="170" cy="170" r="75"/>
-        <circle class="ring" cx="170" cy="170" r="150"/>
-        <circle class="ring dash" cx="170" cy="170" r="225"/>
-        <g class="tick">
-          <line x1="170" y1="14" x2="170" y2="30"/><line x1="170" y1="310" x2="170" y2="326"/>
-          <line x1="14" y1="170" x2="30" y2="170"/><line x1="310" y1="170" x2="326" y2="170"/>
-        </g>
-        <text class="soft" x="163" y="10">N</text>
-        <text class="soft" x="176" y="91">50 nm</text>
-        <text class="soft" x="176" y="16" dx="12">100 nm</text>
-        <line class="bearing" x1="170" y1="170" x2="301" y2="267"/>
-        <circle class="dot" cx="170" cy="170" r="6"/>
-        <text x="100" y="160">Gainesville</text>
-        <circle class="dot" cx="245" cy="283" r="4"/>
-        <text class="soft" x="236" y="287" text-anchor="end">Orlando</text>
-        <circle class="pin" cx="301" cy="267" r="8"/>
-        <circle cx="301" cy="267" r="3" fill="#fff"/>
-        <text class="hot" x="266" y="294">Kennedy 127° 109 nm</text>
-      </svg>
-      <figcaption>A launch at Kennedy is 109 nautical miles from my desk, on a bearing of 127°. I built an app that tells me when to look up.</figcaption>
+      <canvas id="engine" tabindex="0" role="img" aria-label="A 3D turbofan engine. Drag sideways, or press the right arrow key, to spin the fan."></canvas>
+      <div class="gauge"><span>Fan speed</span><span class="track"><i id="n1bar"></i></span><output id="n1">0%</output></div>
+      <figcaption>Drag it to spin it up. Every blade is drawn in code.</figcaption>
     </figure>
+  </div>
+</div>
+
+
+<div class="plate">
+  <div class="wrap">
+    <dl>
+      <div><dt>2<b>+</b> yrs</dt><dd>Pre-sales and delivery for enterprise clients</dd></div>
+      <div><dt><b>$</b>800K</dt><dd>Healthcare engagement won at Cprime</dd></div>
+      <div><dt>60<b>%</b></dt><dd>Faster service resolution with the virtual agents I built</dd></div>
+      <div><dt>3.80</dt><dd>GPA, MS Information Systems, University of Florida</dd></div>
+    </dl>
   </div>
 </div>
 
@@ -244,5 +245,6 @@
     });
   });
 </script>
+<script type="module" src="engine.js"></script>
 </body>
 </html>
