@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sky Watch | Prithviksit Pakala</title>
+<meta name="description" content="How I built Sky Watch, a live map of rocket launches and airshows within driving distance of Gainesville and Orlando, Florida.">
+<meta property="og:title" content="Sky Watch: a launch and airshow tracker for the Space Coast">
+<meta property="og:description" content="Live launch data, real aviation weather, zero hosting cost.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">Prithviksit Pakala</a>
+    <nav aria-label="Main">
+      <a class="hide-sm" href="index.html#experience">Experience</a>
+      <a class="hide-sm" href="index.html#projects">Projects</a>
+      <a class="btn small" href="https://sixthprith.github.io/skywatch/" target="_blank" rel="noopener">Open the live app</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="case-hero">
+  <div class="wrap">
+    <a class="back" href="index.html">Back to portfolio</a>
+    <h1>Sky Watch</h1>
+    <p class="lede">A live map of every rocket launch and airshow worth driving to from Gainesville or Orlando, with a countdown, the direction to face, and an honest read on the clouds.</p>
+    <ul class="facts">
+      <li><span>Status</span> Live, updating itself every six hours</li>
+      <li><span>My role</span> Concept, design, build and deployment</li>
+      <li><span>Built with</span> JavaScript, Leaflet, Python, GitHub Actions and Pages</li>
+      <li><span>Running cost</span> $0</li>
+    </ul>
+    <div class="actions">
+      <a class="btn" href="https://sixthprith.github.io/skywatch/" target="_blank" rel="noopener">Open the live app</a>
+      <a class="btn ghost" href="https://github.com/sixthprith/skywatch" target="_blank" rel="noopener">View the code</a>
+    </div>
+  </div>
+</div>
+
+<section class="demo">
+  <div class="wrap">
+    <div class="head">
+      <h2>Try it here</h2>
+      <p>This is the real app, not a screenshot. Click a pin for the countdown and launch details, drag the radius knob, or switch on sky conditions.</p>
+    </div>
+    <div class="frame tall">
+      <div class="bar"><span>sixthprith.github.io/skywatch</span><a href="https://sixthprith.github.io/skywatch/" target="_blank" rel="noopener">Open full screen</a></div>
+      <div class="view">
+        <iframe src="https://sixthprith.github.io/skywatch/" title="Sky Watch live app" loading="lazy" tabindex="-1"></iframe>
+        <button class="cover" type="button" data-unlock><span>Use the live map</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="prose">
+  <div class="wrap">
+    <h2>Why I built it</h2>
+    <p>I live two hours from Cape Canaveral and I love rockets and military aviation. I kept missing things: a Falcon Heavy I found out about the next morning, an airshow I heard of a week late.</p>
+    <p>Launch schedules live on one site, airshow schedules on several others, and none of them answer the questions I actually have. Is it close enough to drive to? Can I see it from home? Which way do I face? Will there be clouds in the way?</p>
+    <p>So I built one page that answers all four.</p>
+  </div>
+</section>
+
+<section class="prose">
+  <div class="wrap">
+    <h2>What it does</h2>
+    <ul>
+      <li><strong>Shows every upcoming event on one map</strong>, with a pin for each launch pad and airshow venue and a countdown that ticks in real time.</li>
+      <li><strong>Tells you where to look.</strong> Each event gets a compass bearing and distance from home, so a launch you can't drive to can still be watched from the backyard.</li>
+      <li><strong>Filters by how far you'll drive.</strong> A radius knob runs from 25 to 250 nautical miles, and time filters cover the next week, month or season.</li>
+      <li><strong>Reads the sky for you.</strong> Switch on sky conditions and it pulls live airport weather for eleven Florida stations, then translates the cloud layers into what they mean for someone watching from the ground, including fog risk.</li>
+      <li><strong>Pulls real launch details:</strong> the launch window, the orbit, the chance of a go, and a link to the webcast.</li>
+      <li><strong>Reminds you.</strong> A calendar feed you subscribe to once puts every event on your phone, with new launches appearing by themselves.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="prose">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p>There is no server and no database. Everything runs in the visitor's browser or on GitHub's free automation, which is why it costs nothing to keep alive.</p>
+    <div class="flow">
+      <div>
+        <h3>Data comes in</h3>
+        <p>Launches come live from the Launch Library 2 API. Airshows come from a small file I curate by hand. Weather comes from the National Weather Service.</p>
+      </div>
+      <div>
+        <h3>The browser does the math</h3>
+        <p>The page merges the sources, drops anything in the past, and computes great-circle distance and bearing for each event before drawing it on a Leaflet map.</p>
+      </div>
+      <div>
+        <h3>A robot keeps the calendar fresh</h3>
+        <p>Every six hours a GitHub Action runs a Python script that rebuilds the calendar feed and commits it. Nobody has to touch it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="prose">
+  <div class="wrap">
+    <h2>Three problems worth mentioning</h2>
+
+    <h3>The weather service I planned on refused to talk to a browser</h3>
+    <p>My first choice for aviation weather was the Aviation Weather Center. A live test showed it doesn't allow web pages on other domains to read its data. Rather than add a server just to relay it, I switched to the National Weather Service, which does allow it. That service only returns one station per request, so the page asks for eleven at once, skips any that fail, and converts the units itself. The whole thing takes about 150 milliseconds.</p>
+
+    <h3>Nobody publishes airshow schedules as data</h3>
+    <p>There is no API for airshows, and the published schedules sometimes disagree with each other. I keep them in a hand-edited file where each entry carries a confidence flag, so a preliminary date looks different from a confirmed one. Adding a new kind of event to that file makes its filter appear on the map automatically.</p>
+
+    <h3>A free static site can't send notifications</h3>
+    <p>I wanted my phone to tell me about a launch, but GitHub Pages can only serve files. The answer was to stop thinking about notifications and publish a calendar feed instead. Your calendar app already knows how to remind you, so the app borrows that.</p>
+  </div>
+</section>
+
+<section class="prose">
+  <div class="wrap">
+    <h2>The design</h2>
+    <p>The map is styled after a VFR sectional, the paper chart pilots fly with: muted terrain, magenta and blue airspace colors, range rings and bearing lines radiating from home. Distances are in nautical miles and bearings are true, as they would be on the real thing.</p>
+    <p>The controls are deliberately physical. Filters are lamps that light up, and the radius is a knob you turn. It's a tool for people who like aircraft, so it should feel a little like a cockpit.</p>
+  </div>
+</section>
+
+<section class="prose">
+  <div class="wrap">
+    <h2>What this shows about how I work</h2>
+    <ul>
+      <li>I start from a real question a person has and work back to the data.</li>
+      <li>I test assumptions against the live system before building on them.</li>
+      <li>When a constraint blocks the obvious route, I look for a simpler route before a bigger one.</li>
+      <li>I built this with AI as a pair programmer. I set the direction, made the design decisions and verified each piece in the browser.</li>
+    </ul>
+    <div class="actions">
+      <a class="btn" href="https://sixthprith.github.io/skywatch/" target="_blank" rel="noopener">Open the live app</a>
+      <a class="btn ghost" href="index.html#contact">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">Prithviksit Pakala, 2026. <a href="index.html">Back to portfolio</a></div>
+</footer>
+
+<script>
+  document.querySelectorAll('[data-unlock]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var f = b.parentNode.querySelector('iframe');
+      f.removeAttribute('tabindex');
+      b.remove();
+      f.focus();
+    });
+  });
+</script>
+</body>
+</html>
