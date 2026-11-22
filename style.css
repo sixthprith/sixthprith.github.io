@@ -198,3 +198,9 @@ footer { border-top: 1px solid var(--line); padding: 1.5rem 0 2.5rem; color: var
 .pair.trio { grid-template-columns: repeat(3, 1fr); }
 @media (max-width: 900px) { .pair.trio { grid-template-columns: 1fr; } }
 .route .when { line-height: 1.45; }
+
+/* The home-page preview is narrow, which would trigger Sky Watch's phone layout.
+   Render it at 1.8x the size and scale it down so visitors see the full map. */
+@media (min-width: 861px) {
+  .frame:not(.tall) iframe { width: 180%; height: 180%; transform: scale(0.5556); transform-origin: 0 0; }
+}
