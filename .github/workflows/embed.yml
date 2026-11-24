@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 22
       - name: Install the embedding library
-        run: npm install --no-save --no-package-lock @huggingface/transformers@3.8.1
+        run: npm install --no-save --no-package-lock --onnxruntime-node-install-cuda=skip @huggingface/transformers@3.8.1
       - name: Embed the knowledge base
         run: node tools/embed.mjs
       - name: Commit embeddings.json if it changed
