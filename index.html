@@ -11,13 +11,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Caveat:wght@700&family=Saira+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 <meta name="theme-color" content="#0f1216">
 <script type="importmap">
-{ "imports": {
-  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
-  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
-} }
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js" } }
 </script>
 </head>
 <body>
@@ -56,10 +53,20 @@
       </div>
     </div>
 
-    <figure>
-      <canvas id="engine" tabindex="0" role="img" aria-label="A 3D turbofan engine. Drag sideways, or press the right arrow key, to spin the fan."></canvas>
-      <div class="gauge"><span>Fan speed</span><span class="track"><i id="n1bar"></i></span><output id="n1">0%</output></div>
-      <figcaption>Drag it to spin it up. Every blade is drawn in code.</figcaption>
+    <figure class="mapfig">
+      <div class="mapwrap">
+        <canvas id="map" role="img" aria-label="A 3D map of facts about Prithviksit. Related facts sit close together. Use the search box below to find the facts nearest a question."></canvas>
+        <div id="tip" class="tip" hidden></div>
+      </div>
+      <ul class="legend">
+        <li style="--c:#ffb224">Experience</li><li style="--c:#5fd3ff">Projects</li><li style="--c:#7be0a3">Skills</li><li style="--c:#b79cff">Education</li><li style="--c:#e9edf0">About</li>
+      </ul>
+      <form id="ask" class="ask">
+        <label for="q">Ask the map</label>
+        <div><input id="q" type="text" placeholder="Try: testing voice AI agents" autocomplete="off" maxlength="200"><button class="btn small" type="submit">Find</button></div>
+      </form>
+      <p id="askstatus" class="askstatus" aria-live="polite">Each dot is one fact about me, placed by meaning, not by hand. Drag to turn it.</p>
+      <ol id="hits" class="hits"></ol>
     </figure>
   </div>
 </div>
@@ -169,9 +176,9 @@
     </div>
     <div class="pair trio">
       <article class="note">
-        <h3>Client intake redesign for a Jacksonville nonprofit</h3>
-        <p>I lead a pro bono engagement for an organization running a food pantry, senior nutrition and financial assistance. We are reducing friction at the point of service, tracking clients across repeat visits, and improving referrals between partner agencies.</p>
-        <p class="muted">Project Manager, UF AIS Consulting Committee. Sept 2026 to now.</p>
+        <h3>Salesforce and client intake redesign for a Jacksonville nonprofit</h3>
+        <p>I led a pro bono engagement for an organization running a food pantry, senior nutrition and financial assistance. We focused on its Salesforce instance: reducing friction at the point of service, tracking clients across repeat visits, and improving referrals between partner agencies.</p>
+        <p class="muted">Project Manager, UF AIS Consulting Committee. Sept to Nov 2026.</p>
       </article>
       <article class="note">
         <h3>Grant discovery platform for Villages of Hope</h3>
@@ -210,7 +217,7 @@
     </div>
     <dl class="rows">
       <div><dt>University of Florida</dt><dd>MS, Information Systems and Operations Management, data science concentration. GPA 3.80.<small>Hough Graduate School of Business, expected May 2027</small></dd></div>
-      <div><dt>On campus</dt><dd>Graduate Teaching Assistant for the systems analysis and design sequence (ISM 6128 and 6129), including its generative-AI material. Vice President of Marketing, UF Association for Information Systems.</dd></div>
+      <div><dt>On campus</dt><dd>Graduate Teaching Assistant for the systems analysis and design sequence (ISM 6128 and 6129), including its generative-AI material. ISOM Ambassador for the Information Systems and Operations Management program. Former Vice President of Marketing, UF Association for Information Systems.</dd></div>
       <div><dt>JNTU Hyderabad, GRIET</dt><dd>BTech, Computer Science and Engineering<small>2024. Vice Secretary of the Computer Society; host of TEDxGRIET and 25+ events; magazine editor.</small></dd></div>
       <div><dt>Certifications</dt><dd>Applied Generative AI Specialization, Michigan Engineering Professional Education (2026)<small>ServiceNow Certified System Administrator, in progress</small></dd></div>
     </dl>
@@ -245,6 +252,6 @@
     });
   });
 </script>
-<script type="module" src="engine.js"></script>
+<script type="module" src="map.js"></script>
 </body>
 </html>

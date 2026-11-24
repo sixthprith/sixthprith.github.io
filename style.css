@@ -84,22 +84,38 @@ p { margin: 0 0 1rem; max-width: 62ch; }
   -webkit-mask-image: radial-gradient(ellipse 60% 75% at 72% 45%, #000 10%, transparent 75%);
           mask-image: radial-gradient(ellipse 60% 75% at 72% 45%, #000 10%, transparent 75%);
 }
-.hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(1rem, 4vw, 3rem); align-items: center; }
+.hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(1rem, 4vw, 3rem); align-items: start; }
 .hero figure { margin: 0; }
 .facts { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 0.35rem; font-size: 1.05rem; }
 .facts li { display: grid; grid-template-columns: 6.5rem 1fr; gap: 0.75rem; }
 .facts span { color: var(--muted); }
 
-#engine { width: 100%; aspect-ratio: 1; cursor: grab; touch-action: pan-y; outline-offset: -6px; }
-#engine.held { cursor: grabbing; }
-.gauge { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.9rem; max-width: 26rem; margin: 0 auto; color: var(--muted); font-size: 1rem; }
-.gauge output { font-family: var(--display); font-weight: 700; font-size: 1.7rem; line-height: 1; color: var(--amber); min-width: 3.2ch; text-align: right; font-variant-numeric: tabular-nums; }
-.gauge .track { height: 6px; background: var(--raise); border-radius: 3px; overflow: hidden; }
-.gauge .track i { display: block; height: 100%; background: var(--amber); transform-origin: 0 50%; transform: scaleX(0); }
-.hero figcaption { color: var(--muted); font-size: 1rem; text-align: center; margin: 0.6rem auto 0; max-width: 34ch; }
+/* embedding map */
+.mapwrap { position: relative; }
+#map { width: 100%; aspect-ratio: 1.08; cursor: grab; touch-action: pan-y; }
+#map.held { cursor: grabbing; }
+#map.over { cursor: pointer; }
+.tip { position: absolute; z-index: 2; width: 250px; pointer-events: none; background: var(--raise); border: 1px solid #44505d; border-radius: 6px; padding: 0.6rem 0.75rem; font-size: 0.9rem; line-height: 1.4; box-shadow: 0 12px 30px -10px #000; }
+.tip strong { display: block; color: #fff; margin-bottom: 0.2rem; }
+.tip span { color: #c9d2db; }
+.legend { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.3rem 1rem; margin: 0 0 1rem; padding: 0; font-size: 0.9rem; color: var(--muted); }
+.legend li::before { content: ""; display: inline-block; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--c); margin-right: 0.4rem; }
+.ask { max-width: 27rem; margin: 0 auto; }
+.ask label { display: block; font-family: var(--display); font-weight: 600; font-size: 1.25rem; margin-bottom: 0.35rem; }
+.ask div { display: flex; gap: 0.5rem; }
+.ask input { flex: 1; min-width: 0; font: inherit; font-size: 1rem; color: var(--text); background: var(--panel); border: 1px solid #44505d; border-radius: 6px; padding: 0.5rem 0.75rem; }
+.ask input::placeholder { color: #75828f; }
+.ask input:focus { outline: 2px solid var(--amber); outline-offset: 1px; border-color: transparent; }
+.ask.busy button { opacity: 0.6; pointer-events: none; }
+.askstatus { color: var(--muted); font-size: 0.95rem; max-width: 27rem; margin: 0.6rem auto 0; }
+.hits { list-style: none; max-width: 27rem; margin: 0.4rem auto 0; padding: 0; font-size: 1rem; }
+.hits li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.4rem 0; border-top: 1px solid var(--line); }
+.hits a { color: var(--text); text-decoration-color: var(--c); text-decoration-thickness: 2px; }
+.hits a:hover { color: var(--c); }
+.hits span { color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
 @media (max-width: 860px) {
   .hero .wrap { grid-template-columns: 1fr; }
-  .hero figure { max-width: 20rem; margin: 1.5rem auto 0; }
+  .hero figure { max-width: 27rem; width: 100%; margin: 1.5rem auto 0; }
   .hero::before { -webkit-mask-image: radial-gradient(ellipse 90% 45% at 50% 22%, #000 10%, transparent 75%); mask-image: radial-gradient(ellipse 90% 45% at 50% 22%, #000 10%, transparent 75%); }
 }
 
