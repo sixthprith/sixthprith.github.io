@@ -102,9 +102,9 @@
     {
       "id": "project-intake",
       "group": "project",
-      "title": "Nonprofit Salesforce and client intake redesign",
-      "link": "#projects",
-      "text": "From September to November 2026 he was Project Manager on a pro bono UF AIS consulting engagement for a Jacksonville nonprofit that runs a food pantry, senior nutrition and financial assistance. The engagement focused on the nonprofit's Salesforce instance: reducing friction at the point of service, tracking clients across repeat visits and improving referrals between partner agencies."
+      "title": "UCOM case study: Never Miss a Sign",
+      "link": "ucom.html",
+      "text": "From September to November 2026 Prithviksit was client-facing co-project manager of a pro bono UF AIS consulting team of two project managers and seven analysts, through Smart North Florida, for UCOM, a Jacksonville food pantry and community services nonprofit. In nine weeks the team configured an escalation trigger inside the nonprofit's own Salesforce: a record-triggered flow that flags at-risk food-pantry clients, matches them to resources and shows them on a Client Risk Flags dashboard, plus a self-service intake form in four languages. It used no code and no new licences, and was demonstrated in a sandbox and handed over."
     },
     {
       "id": "project-grants",

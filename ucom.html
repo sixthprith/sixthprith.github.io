@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Never Miss a Sign: UCOM case study | Prithviksit Pakala</title>
+<meta name="description" content="An escalation trigger for a Jacksonville food pantry, built inside its own Salesforce. Case study by Prithviksit Pakala.">
+<meta property="og:title" content="Never miss a sign: an escalation trigger for a food pantry">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one dark case-file card on a pale page. Mixed italic-serif / sans headline, pill section tabs,
+   circled numbers, and a red survey-rail down the left of each section over a fine vertical grid.
+   A committed single-theme (dark card) design; the page ground stays pale in both viewer themes. */
+:root{
+  --page:#f1f0ed; --card:#0d0d0e; --card-2:#141416; --ink:#f4f2ee; --ink-2:#c8c5bf; --mute:#8d8a84;
+  --line:rgba(255,255,255,.1); --line-2:rgba(255,255,255,.22); --grid:rgba(255,255,255,.055);
+  --red:#e0362c; --red-soft:rgba(224,54,44,.14);
+  --serif:"Newsreader","Iowan Old Style",Georgia,serif;
+  --sans:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --gutter-l:max(16px,env(safe-area-inset-left,0px));
+  --gutter-r:max(16px,env(safe-area-inset-right,0px));
+}
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;margin:0;
+  padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-block:clamp(.75rem,2vw,1.5rem)}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+p{margin:0}
+h1,h2,h3{margin:0;text-wrap:balance}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+
+.card{max-width:1160px;margin:0 auto;background:var(--card);color:var(--ink);border-radius:28px;overflow:hidden;position:relative;
+  background-image:repeating-linear-gradient(90deg,var(--grid) 0 1px,transparent 1px 64px)}
+.inner{padding-left:clamp(1.25rem,5vw,4rem);padding-right:clamp(1.25rem,5vw,4rem)}
+
+/* top */
+.top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;padding-block:1.4rem 0;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.top .logo{background:#fff;border-radius:4px;padding:.35rem .55rem;width:104px;display:inline-block;vertical-align:middle;margin-right:.8rem}
+
+/* headline */
+.head{padding-block:clamp(2.2rem,5vw,3.8rem) 1.6rem;display:grid;gap:1.4rem}
+h1{font-family:var(--sans);font-weight:400;font-size:clamp(2.1rem,5.2vw,4.1rem);line-height:1.08;letter-spacing:-.02em;max-width:17ch}
+h1 i{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.08em}
+.tabs{display:flex;flex-wrap:wrap;gap:.6rem}
+.tabs a{text-decoration:none;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--ink);
+  border:1px solid var(--line-2);border-radius:999px;padding:.72rem 1.3rem;transition:background .2s,color .2s,border-color .2s}
+.tabs a:hover{border-color:var(--ink)}
+.tabs a.on{background:#fff;color:#111;border-color:#fff}
+
+/* hero figure */
+.hero{margin:1rem 0 0;position:relative}
+.hero img{width:100%;aspect-ratio:16/8;object-fit:cover;object-position:50% 36%;border-radius:14px;border:1px solid var(--line)}
+.hero .cap{position:absolute;left:1rem;bottom:1rem;background:rgba(13,13,14,.72);backdrop-filter:blur(6px);color:var(--ink-2);font-size:.78rem;padding:.4rem .7rem;border-radius:6px;max-width:calc(100% - 2rem)}
+.dek{font-family:var(--serif);font-size:clamp(1.25rem,2.2vw,1.65rem);line-height:1.4;color:var(--ink);max-width:42rem;padding-block:2rem .6rem}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem 1.6rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding-block:1.1rem;margin-bottom:1rem}
+.meta div{font-size:.92rem;color:var(--ink-2)}
+.meta b{display:block;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);font-weight:500;margin-bottom:.3rem}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem 2rem;padding-block:1.2rem 2.6rem}
+.stat strong{font-family:var(--serif);font-weight:400;font-size:2.6rem;line-height:1;display:block;font-variant-numeric:tabular-nums}
+.stat span{font-size:.84rem;color:var(--mute)}
+
+/* sections with rail */
+.sec{position:relative;padding:clamp(2.4rem,5vw,4rem) 0 clamp(2.4rem,5vw,4rem) clamp(1.6rem,4vw,3rem);border-top:1px solid var(--line)}
+.sec::before{content:"";position:absolute;left:0;top:3.2rem;bottom:2.2rem;width:2px;background:var(--red)}
+.sec::after{content:"";position:absolute;left:-5px;top:3.2rem;border:6px solid transparent;border-top:8px solid var(--red);border-bottom:0;transform:translateY(-100%)}
+.sec .foot{position:absolute;left:-5px;bottom:2.2rem;border:6px solid transparent;border-bottom:8px solid var(--red);border-top:0;transform:translateY(100%)}
+.num{display:inline-grid;place-items:center;width:3.4rem;height:3.4rem;border:1px solid var(--ink);border-radius:999px;font-size:.78rem;letter-spacing:.06em;font-weight:500;font-variant-numeric:tabular-nums;margin-bottom:1.6rem}
+.sec h2{font-family:var(--sans);font-weight:400;font-size:clamp(1.7rem,3.2vw,2.5rem);letter-spacing:-.02em;line-height:1.15;margin-bottom:1.2rem}
+.sec h2 i{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.06em}
+.sec h3{font-family:var(--sans);font-weight:500;font-size:1.05rem;letter-spacing:-.005em}
+.prose{display:grid;gap:1.2rem;max-width:44rem;min-width:0}
+.prose p{color:var(--ink-2);font-size:1.03rem}
+.prose p strong{color:var(--ink);font-weight:600}
+.wide{max-width:none}
+.mono{font-family:var(--mono);font-size:.84em;color:var(--ink)}
+.eyebrow{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);font-weight:500}
+
+.pull{font-family:var(--serif);font-style:italic;font-size:clamp(1.35rem,2.3vw,1.75rem);line-height:1.3;color:var(--ink);border-left:1px solid var(--line-2);padding-left:1.2rem}
+.pull small{display:block;font-family:var(--sans);font-style:normal;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:.7rem;font-weight:500}
+
+figure{margin:0;display:grid;gap:.6rem}
+figure img{border-radius:12px;border:1px solid var(--line)}
+figcaption{font-size:.84rem;color:var(--mute)}
+.frame{border:1px solid var(--line-2);border-radius:12px;overflow:hidden;background:var(--card-2)}
+.frame .bar{display:flex;gap:.4rem;align-items:center;padding:.55rem .8rem;border-bottom:1px solid var(--line)}
+.frame .bar i{width:8px;height:8px;border-radius:50%;background:var(--line-2);display:block}
+.frame .bar span{margin-left:.6rem;font-family:var(--mono);font-size:.7rem;color:var(--mute)}
+.frame img{border:0;border-radius:0}
+
+/* lists & grids */
+.rows{display:grid;border-top:1px solid var(--line-2)}
+.row{display:grid;grid-template-columns:minmax(0,1fr);gap:.25rem 1.5rem;padding:.95rem 0;border-bottom:1px solid var(--line)}
+@media (min-width:640px){.row{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}}
+.row .k{color:var(--ink);font-weight:500;font-size:.98rem}
+.row .v{color:var(--ink-2);font-size:.96rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{font-family:var(--mono);font-size:.74rem;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:.3rem .7rem}
+
+.stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8rem;counter-reset:st}
+.stage{border:1px solid var(--line);border-radius:14px;padding:1.2rem;display:grid;gap:.5rem;align-content:start;background:var(--card-2)}
+.stage::before{counter-increment:st;content:"0" counter(st);font-size:.7rem;letter-spacing:.14em;color:var(--mute);font-weight:500}
+.stage h3{font-size:1.2rem;font-weight:500}
+.stage p{font-size:.92rem;color:var(--ink-2)}
+.stage.on{border-color:var(--red);background:var(--red-soft)}
+.stage.on::after{content:"Configured in the sandbox";font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);font-weight:500;margin-top:.2rem}
+
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.4rem 2rem;margin-top:.6rem}
+.step{display:grid;gap:.6rem;align-content:start;border-top:1px solid var(--line-2);padding-top:.9rem}
+.step.flag{border-top-color:var(--red)}
+.step.flag .eyebrow{color:var(--red)}
+.step ul{margin:0;padding-left:1.1rem;color:var(--ink-2);font-size:.93rem;display:grid;gap:.3rem}
+.sig{display:grid;gap:.3rem;font-family:var(--mono);font-size:.76rem;color:var(--ink-2)}
+.sig div{display:flex;gap:.6rem;align-items:baseline}
+.sig b{color:var(--red);font-weight:500}
+
+.tl{display:grid;border-top:1px solid var(--line-2)}
+.t{display:grid;grid-template-columns:8rem minmax(0,1fr);gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--line);align-items:baseline}
+.t .d{font-family:var(--mono);font-size:.74rem;color:var(--mute);white-space:nowrap}
+.t .w{color:var(--ink-2);font-size:.97rem}
+.t.key .w{color:var(--ink);font-weight:500}
+.t.key .d{color:var(--red)}
+@media (max-width:480px){.t{grid-template-columns:1fr;gap:.1rem}}
+
+.rules{display:grid;border-top:1px solid var(--line-2)}
+.rule{display:grid;grid-template-columns:6.5rem minmax(0,1fr);gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line)}
+.rule .m{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--red);padding-top:.3rem;font-weight:500}
+.rule p{font-size:.95rem;color:var(--ink-2)}
+@media (max-width:480px){.rule{grid-template-columns:1fr;gap:.2rem}}
+
+.deliv{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.8rem}
+.deliv div{border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem;font-size:.92rem;color:var(--ink-2);background:var(--card-2)}
+.deliv div b{display:block;color:var(--ink);font-weight:500;font-size:1.02rem;margin-bottom:.35rem}
+
+.testi{margin-top:.6rem;padding:clamp(1.4rem,3vw,2.2rem) 0 0;border-top:1px solid var(--line-2);display:grid;gap:1rem}
+.testi blockquote{margin:0;font-family:var(--serif);font-style:italic;font-size:clamp(1.35rem,2.4vw,1.9rem);line-height:1.32;text-wrap:balance;max-width:46rem}
+.testi cite{font-style:normal;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:500}
+
+.lessons{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem 2.6rem}
+.lesson{display:grid;gap:.4rem;padding-top:.9rem;border-top:1px solid var(--line-2)}
+.lesson h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.3rem}
+.lesson p{font-size:.94rem;color:var(--ink-2)}
+
+.end{padding-block:2rem 2.4rem;border-top:1px solid var(--line);color:var(--mute);font-size:.82rem;display:grid;gap:.4rem}
+@media (prefers-reduced-motion:reduce){.tabs a{transition:none}}
+</style>
+<style>.backlink{color:var(--ink-2);text-underline-offset:.2em}.backlink:hover{color:#fff}</style>
+</head>
+<body>
+<main class="card">
+  <div class="inner">
+    <div class="top">
+      <div><span class="logo"><img src="assets/ucom-logo.png" alt="UCOM, United Community Outreach Ministry"></span>Case study · Autumn 2026</div>
+      <div>UF AIS Consulting × Smart North Florida · <a class="backlink" href="index.html">Back to portfolio</a></div>
+    </div>
+
+    <header class="head">
+      <h1><i>Never</i> miss a sign: an <i>escalation trigger</i> for a food pantry, built inside its own Salesforce</h1>
+      <nav class="tabs" aria-label="Sections">
+        <a href="#problem" class="on">The problem</a>
+        <a href="#discovery">Discovery</a>
+        <a href="#solution">The solution</a>
+        <a href="#result">The result</a>
+        <a href="#lessons">Lessons</a>
+      </nav>
+    </header>
+
+    <figure class="hero">
+      <img src="assets/team-steps.jpg" alt="The UF AIS consulting team with UCOM and Smart North Florida staff on the steps of the pantry, a former chapel, on site-visit day">
+      <span class="cap">Site-visit day, 19 Sep 2026. The pantry occupies a former chapel on Jacksonville's Southside.</span>
+    </figure>
+
+    <p class="dek">A Jacksonville food pantry was losing crisis signals in volunteers' notes. In nine weeks we taught its own Salesforce to raise a flag, match a resource, and put the right person on a dashboard the next morning. No code, no new licences, no client data touched.</p>
+
+    <div class="meta">
+      <div><b>My role</b>Client-facing co-PM: scope, vision, workstreams, client relationship</div>
+      <div><b>Team</b>2 PMs, 7 analysts</div>
+      <div><b>Client</b>UCOM, serving Southside Jacksonville since 1979</div>
+      <div><b>Window</b>19 Sep – 13 Nov 2026</div>
+    </div>
+    <div class="stats" aria-label="Key numbers">
+      <div class="stat"><strong>9</strong><span>weeks, site visit to live flag</span></div>
+      <div class="stat"><strong>90 s</strong><span>one question set, every channel</span></div>
+      <div class="stat"><strong>4</strong><span>languages on the self-service form</span></div>
+      <div class="stat"><strong>0</strong><span>lines of code · licences · client records opened</span></div>
+    </div>
+
+    <section class="sec" id="problem">
+      <span class="foot"></span>
+      <div class="num">01</div>
+      <h2>Escalations were falling <i>through the cracks</i></h2>
+      <div class="prose">
+        <p>UCOM runs a food pantry across seven zip codes, plus financial assistance, senior nutrition and referrals. About 98% of first contacts are for food. The question was what happens to the rest of what people say.</p>
+        <p>What the client called "intake" turned out to be two steps. A ninety-second demographic sign-up makes someone a food-program recipient. An elevation to case management (budget counselling, job coaching, rent or utility help) makes them a client. That second step used to happen because S., the Executive Director and a lawyer by training, interviewed people face to face and could surface a crisis in five minutes. As the organisation grew and intake moved to volunteers at the curb, the elevation stopped. The only mechanism left was a volunteer typing <span class="mono">see K.</span> into a free-text note that nothing reads.</p>
+        <div class="pull">"Now that it's not happening organically, we have to create a trigger."<small>S., Executive Director · site visit, 19 Sep 2026</small></div>
+        <p>They wanted three things: to never miss a sign, to track who keeps coming back, and a CRM that shows at a glance how many people are visiting more than once, because a second visit in a month is itself a signal. The written brief had named three goals: intake friction, identity tracking, referral routing. The visit collapsed them into one. The trigger.</p>
+        <figure>
+          <img src="assets/site-walk.jpg" alt="The Executive Director walking the student team around the pantry grounds beside a historic marker for the former church" loading="lazy">
+          <figcaption>S. walking us through the grounds, and the history behind the zip codes UCOM serves.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="sec" id="discovery">
+      <span class="foot"></span>
+      <div class="num">02</div>
+      <h2>The pieces were <i>already installed.</i> Nobody had connected them.</h2>
+      <div class="prose wide">
+        <p style="max-width:44rem">Before designing anything I surveyed the Salesforce sandbox, metadata only, and mapped the paper intake form field by field. The survey reframed the project: the right answer was configuration, not a build.</p>
+        <div class="rows">
+          <div class="row"><div class="k">Nonprofit Case Management package</div><div class="v">A Watch List checkbox and date on every client record that nothing read</div></div>
+          <div class="row"><div class="k">Program Management Module</div><div class="v">Last-service date, consecutive absences and attendance rate already computed per client</div></div>
+          <div class="row"><div class="k">Income and five expenses on the household record</div><div class="v">A monthly shortfall computable from data already collected; no new question needed</div></div>
+          <div class="row"><div class="k">Housing, employment, insurance, income-type fields</div><div class="v">The indicator inputs, already captured by the paper form</div></div>
+          <div class="row"><div class="k">Four intake channels</div><div class="v">Phone, curbside, code-access food lockers, mobile distribution at senior complexes. About 70% of food leaves off-site, where intake is handwritten and keyed in days later</div></div>
+        </div>
+        <p style="max-width:44rem">The mapping also showed what the form never asked: any <strong>change</strong> question (lost a job, lost SNAP, car broke down), whether the person had been before, or insurance status. So the escalation screen needed three or four change questions layered on an existing form, not a new instrument. Data quality set the ceiling; I handed the full list to the analytics team and designed the rule around fields clean enough to trust.</p>
+        <div class="chips" aria-label="Data quality findings">
+          <span class="chip">Gender picklist: two people's first names</span>
+          <span class="chip">Salary_Type: dollar amounts</span>
+          <span class="chip">Employment_Status: FALSE / PT / FT</span>
+          <span class="chip">51 services, 4 duplicate referrals</span>
+          <span class="chip">Housing Status on two objects</span>
+          <span class="chip">Two alert mechanisms</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="solution">
+      <span class="foot"></span>
+      <div class="num">03</div>
+      <h2>Four stages. We configured <i>the one that fires.</i></h2>
+      <div class="prose wide">
+        <p style="max-width:44rem">In week five S. widened the frame to a four-stage process. The team adopted it: stage two configured and demonstrated in the sandbox, the rest designed, prototyped or handed on.</p>
+        <div class="stages">
+          <div class="stage"><h3>Enroll</h3><p>One ten-question set across every channel; a self-service form by link or QR code in English, Spanish, Russian and Arabic.</p></div>
+          <div class="stage on"><h3>Screen &amp; flag</h3><p>A record-triggered flow reads indicators the client already collects and creates a flag event with a reason and a tier.</p></div>
+          <div class="stage"><h3>Refer</h3><p>A matching rule links each reason to K.'s resource catalogue; one click logs what was sent, recommended or allotted.</p></div>
+          <div class="stage"><h3>Track</h3><p>Status per flag (open, enrolled, cleared) and the three outcomes S. named, mapped to a field or a gap; reporting handed to the analytics team.</p></div>
+        </div>
+
+        <h3 style="margin-top:1rem">Inside stage two</h3>
+        <div class="flow">
+          <div class="step">
+            <span class="eyebrow">Inputs</span><h3>A client record changes</h3>
+            <div class="sig">
+              <div><b>→</b> recent job or benefit loss</div>
+              <div><b>→</b> lost or at-risk housing; eviction or shut-off notice</div>
+              <div><b>→</b> no transportation; immediate crisis</div>
+              <div><b>→</b> income − (rent + JEA + auto + phone + internet) below threshold</div>
+              <div><b>→</b> second completed visit in 30 days</div>
+            </div>
+          </div>
+          <div class="step flag">
+            <span class="eyebrow">Rule</span><h3>Record-triggered flow</h3>
+            <ul><li>Any condition true → create a <strong>flag event</strong> with reason and tier (standalone or combined)</li><li>Match the reason to the resource catalogue</li><li>Never un-flags by itself; a person does</li></ul>
+          </div>
+          <div class="step">
+            <span class="eyebrow">Landing</span><h3>Client Risk Flags dashboard</h3>
+            <ul><li>This week's flags: reason, tier, date</li><li>90-day status, flags per week, resources provided</li><li>One-click "Give Resources" logging</li><li>Opens for whoever is on shift; volunteers share one login</li></ul>
+          </div>
+        </div>
+
+        <figure>
+          <div class="frame">
+            <div class="bar"><i></i><i></i><i></i><span>Sandbox (SmartNF) · UCOM Client Risk Flags · demo records</span></div>
+            <img src="assets/dashboard.jpg" alt="The Client Risk Flags dashboard in the Salesforce sandbox: this week's flagged clients with reasons and tiers, a 90-day status donut, flags per week, and resources provided. Demo records only." loading="lazy">
+          </div>
+          <figcaption>The dashboard K. chose over an email or a task. Every row is a demo record.</figcaption>
+        </figure>
+
+        <p style="max-width:44rem">Three choices shaped it. Each flag is its own <strong>event</strong> rather than a checkbox, so a client flagged twice for different reasons shows two lines and the weekly count is a real number. The shortfall is a <strong>formula</strong>, because the data was already there. And because volunteers share one login, nothing depends on who is signed in: the landing is a dashboard, not a task assigned to "the current user".</p>
+
+        <h3 style="margin-top:1rem">How the nine weeks ran</h3>
+        <p style="max-width:44rem">I split the co-PM role with Mike Magraner by domain. I owned everything external: every email and call with the client, the scope, the weekly check-in, the single name on each message. Internally I coordinated the technical work and formed the workstreams: a cases-and-questions pair to mine S.'s past cases for indicators, a Salesforce group for the forms and the flag build, a dashboard sub-team, and an archival lane. I held the vision for the forms, and my recurring job was the translation layer, checking that each technical decision still matched the pain point we heard on site. Mike ran the midpoint and final presentations and coordinated platform access.</p>
+        <div class="tl">
+          <div class="t"><span class="d">19 Sep</span><span class="w">Site visit, transcript, debrief: three goals become one trigger</span></div>
+          <div class="t"><span class="d">22–26 Sep</span><span class="w">Salesforce walkthroughs with K. and the volunteer admin</span></div>
+          <div class="t"><span class="d">18 Oct</span><span class="w">Sandbox survey and paper-form mapping</span></div>
+          <div class="t key"><span class="d">21 Oct</span><span class="w">S. widens scope to four stages; team re-formed into workstreams</span></div>
+          <div class="t"><span class="d">22–30 Oct</span><span class="w">Firing rule, screener and referral catalogue designed against K.'s past cases</span></div>
+          <div class="t"><span class="d">26 Oct – 7 Nov</span><span class="w">Flag, resource matching and dashboard built and tested with demo records</span></div>
+          <div class="t"><span class="d">6 Nov</span><span class="w">Risk-owner review before anything is called ready</span></div>
+          <div class="t key"><span class="d">13 Nov</span><span class="w">Final presentation and live demo to UCOM and Smart North Florida</span></div>
+          <div class="t"><span class="d">20 Nov</span><span class="w">Handoff brief and production spec delivered</span></div>
+        </div>
+
+        <h3 style="margin-top:1rem">Governance, treated as design</h3>
+        <p style="max-width:44rem">The intermediary's rules were absolute: no personally identifiable information, no financial information, no donor data, and any accidental PII returned, reported and deleted.</p>
+        <div class="rules">
+          <div class="rule"><span class="m">Before</span><p>Donors and clients share the same Contact and Household objects, so the donor prohibition meant correct filtering inside a shared system. When the admin offered a sandbox, I asked in advance for a Developer or masked Partial Copy rather than a full copy of production. The team treated the sandbox as if it held real data regardless.</p></div>
+          <div class="rule"><span class="m">During</span><p>Setup and metadata only; no client record opened. Every record we created was prefixed <span class="mono">TEST-</span>. No existing flow edited, only clones. No picklist value changed. Every metadata save confirmed by a PM and logged with a rollback.</p></div>
+          <div class="rule"><span class="m">Access</span><p>When a Salesforce release made passkeys mandatory for privileged users, I traced it to the shared seat's admin profile instead of adopting the other team's daily workaround, and proposed a non-privileged shared user for analysts plus one builder login for the PMs.</p></div>
+          <div class="rule"><span class="m">By design</span><p>The rule reads structured fields only. Free-text notes, where clients' unprompted health disclosures live, never enter it.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="result">
+      <span class="foot"></span>
+      <div class="num">04</div>
+      <h2>Built, tested, activated, <i>demonstrated.</i> Then handed over.</h2>
+      <div class="prose wide">
+        <p style="max-width:44rem">The flag went live in the sandbox a week before the deadline and was demonstrated to the client on 13 Nov. The control case, a client with no risk signal edited for something unrelated, correctly does not flag.</p>
+        <div class="deliv">
+          <div><b>Escalation flag + dashboard</b>Record-triggered flow, flag events with reason and tier, resource matching, Client Risk Flags dashboard. Activated in sandbox.</div>
+          <div><b>Self-service intake form</b>Prototyped in Salesforce, four languages, zip-code eligibility logic; creates the client record directly. No retyping.</div>
+          <div><b>Master question set</b>Ten questions in ninety seconds, merged from the paper form, the phone script and the Spanish Google Form.</div>
+          <div><b>Firing rule, validated</b>Replayed against K.'s past cases: a lost ride, an eviction notice, a release from prison, a refugee seeking work. Which it would have caught, and which not.</div>
+          <div><b>Resource catalogue + sign-up list</b>Matching rules from K.'s community resource list; a "New Self-Service Sign-ups" list so nobody is missed or called twice.</div>
+          <div><b>Production spec + handoff brief</b>For the volunteer admin, in the order he would configure it, with a rollback per step. Plus a document index and a comms log.</div>
+        </div>
+        <div class="testi">
+          <blockquote>"Each presentation was fantastic and you all should be proud of yourselves and your teams. Thanks again for giving your time to these organizations. You've truly made a difference in the community."</blockquote>
+          <cite>C., Executive Director, Smart North Florida · 16 Nov 2026</cite>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="lessons">
+      <span class="foot"></span>
+      <div class="num">05</div>
+      <h2>What this engagement <i>taught me</i></h2>
+      <div class="prose wide">
+        <div class="lessons">
+          <div class="lesson"><h3>Don't build what the client already owns.</h3><p>The case-management package was installed, with a Watch List field nobody used. Finding that took a metadata survey, not a benchmark scan. My vendor-side instinct would have been to propose something; the consultant's job was to find what was already there.</p></div>
+          <div class="lesson"><h3>The constraint is the design.</h3><p>Every recommendation had to survive a volunteer administrator with a few hours a month. That ruled out external BI tools, custom code and a fresh org. It ruled in one flow and a dashboard.</p></div>
+          <div class="lesson"><h3>Scope is a listening problem.</h3><p>The brief said three things; the site visit said one, in the client's own words. I went in favouring referral routing and left with the trigger, because I read the transcript against the brief instead of the brief against the transcript.</p></div>
+          <div class="lesson"><h3>Governance earns trust faster than deliverables.</h3><p>Asking for a masked sandbox before it existed, keeping free-text disclosures out of the rule, and declining a credential shortcut cost a few hours. They are also why the risk owner let us demo in front of the client.</p></div>
+          <div class="lesson"><h3>Two teams, one dependency.</h3><p>The analytics team needed visit-frequency trends; those are impossible without knowing two visits belong to one household. Our data-quality findings were their requirements. Neither brief showed this; a standing sync did.</p></div>
+          <div class="lesson"><h3>What I'd do differently.</h3><p>Secure a named contact, a recurring check-in and permission to time a live intake before leaving the first meeting, not by email afterwards. The baseline we never timed is the number I most wish this page had.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="end">
+      <p>Prithviksit Pakala · MS-ISOM, University of Florida · UF AIS Consulting Committee, Autumn 2026. Client staff are referred to by initial; every screenshot shows demo records only.</p>
+      <p><a class="backlink" href="index.html">Back to Prithviksit's portfolio</a></p>
+      <p>Stack: Salesforce Nonprofit Success Pack, Program Management Module, Nonprofit Case Management; Flow Builder, formula fields, list views, dashboards.</p>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.tabs a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function set(id){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+id);});}
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)set(e.target.id);});},{rootMargin:'-35% 0px -55% 0px'});
+    secs.forEach(function(s){if(s)io.observe(s);});
+  }
+  links.forEach(function(a){a.addEventListener('click',function(){set(a.getAttribute('href').slice(1));});});
+})();
+</script>
+</body>
+</html>

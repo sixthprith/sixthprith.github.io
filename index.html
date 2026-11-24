@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Caveat:wght@700&family=Saira+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=5">
+<link rel="stylesheet" href="style.css?v=6">
 <meta name="theme-color" content="#0f1216">
 <script type="importmap">
 { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js" } }
@@ -24,8 +24,9 @@
   <div class="wrap">
     <a class="brand" href="#top">Prithviksit Pakala</a>
     <nav aria-label="Main">
-      <a class="hide-sm" href="#sky-watch">Sky Watch</a>
+      <a class="hide-sm" href="#featured">Case study</a>
       <a class="hide-sm" href="#experience">Experience</a>
+      <a class="hide-sm" href="#sky-watch">Sky Watch</a>
       <a class="hide-sm" href="#projects">Projects</a>
       <a class="hide-sm" href="#skills">Skills</a>
       <a class="btn small" href="https://www.linkedin.com/in/prithviksit" target="_blank" rel="noopener">LinkedIn</a>
@@ -49,7 +50,7 @@
       <div class="actions">
         <a class="btn" href="mailto:6prithviksit@gmail.com">Email me</a>
         <a class="btn ghost" href="https://www.linkedin.com/in/prithviksit" target="_blank" rel="noopener">View LinkedIn</a>
-        <a class="btn ghost" href="#sky-watch">See what I built</a>
+        <a class="btn ghost" href="#featured">See my work</a>
       </div>
     </div>
 
@@ -83,24 +84,22 @@
   </div>
 </div>
 
-<section class="feature" id="sky-watch">
+<section class="feature" id="featured">
   <div class="wrap">
     <div>
-      <p class="tagline">Featured project, live right now</p>
-      <h2>Sky Watch: a launch and airshow tracker for the Space Coast</h2>
-      <p style="margin-top:1rem">A map that shows every rocket launch and airshow worth the drive, with a live countdown, the direction to face, and whether the clouds will ruin it. It runs on live launch data, costs nothing to host, and updates itself every six hours.</p>
+      <p class="tagline">Featured case study</p>
+      <h2>Never miss a sign: an escalation trigger for a food pantry, built inside its own Salesforce</h2>
+      <p style="margin-top:1rem">A Jacksonville food pantry was losing crisis signals in volunteers' notes. In nine weeks, as client-facing co-PM of a nine-person team, I helped teach its own Salesforce to raise a flag, match a resource, and put the right person on a dashboard the next morning. No code, no new licences, no client data touched.</p>
       <div class="actions">
-        <a class="btn" href="sky-watch.html">Read how I built it</a>
-        <a class="btn ghost" href="https://sixthprith.github.io/skywatch/" target="_blank" rel="noopener">Open the live app</a>
+        <a class="btn" href="ucom.html">Read the case study</a>
       </div>
     </div>
-    <div class="frame">
-      <div class="bar"><span>sixthprith.github.io/skywatch</span><a href="https://sixthprith.github.io/skywatch/" target="_blank" rel="noopener">Open full screen</a></div>
-      <div class="view">
-        <iframe src="https://sixthprith.github.io/skywatch/" title="Sky Watch live app" loading="lazy" tabindex="-1"></iframe>
-        <button class="cover" type="button" data-unlock><span>Use the live map</span></button>
-      </div>
-    </div>
+    <ol class="stages">
+      <li><b>Enroll</b><span>One question set, and a sign-up form in four languages.</span><i>Prototyped</i></li>
+      <li><b>Screen and flag</b><span>Risk signals raise a flag and land on a dashboard.</span><i class="built">Built</i></li>
+      <li><b>Refer</b><span>Each flag reason matched to a resource.</span><i>Designed</i></li>
+      <li><b>Track</b><span>Status per flag, and the outcomes that matter.</span><i>Handed on</i></li>
+    </ol>
   </div>
 </section>
 
@@ -169,17 +168,33 @@
   </div>
 </section>
 
+<section class="feature" id="sky-watch">
+  <div class="wrap">
+    <div>
+      <p class="tagline">Side project, live right now</p>
+      <h2>Sky Watch: a launch and airshow tracker for the Space Coast</h2>
+      <p style="margin-top:1rem">A map that shows every rocket launch and airshow worth the drive, with a live countdown, the direction to face, and whether the clouds will ruin it. It runs on live launch data, costs nothing to host, and updates itself every six hours.</p>
+      <div class="actions">
+        <a class="btn" href="sky-watch.html">Read how I built it</a>
+        <a class="btn ghost" href="https://sixthprith.github.io/skywatch/" target="_blank" rel="noopener">Open the live app</a>
+      </div>
+    </div>
+    <div class="frame">
+      <div class="bar"><span>sixthprith.github.io/skywatch</span><a href="https://sixthprith.github.io/skywatch/" target="_blank" rel="noopener">Open full screen</a></div>
+      <div class="view">
+        <iframe src="https://sixthprith.github.io/skywatch/" title="Sky Watch live app" loading="lazy" tabindex="-1"></iframe>
+        <button class="cover" type="button" data-unlock><span>Use the live map</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="projects">
   <div class="wrap">
     <div class="head">
       <h2>More projects</h2>
     </div>
-    <div class="pair trio">
-      <article class="note">
-        <h3>Salesforce and client intake redesign for a Jacksonville nonprofit</h3>
-        <p>I led a pro bono engagement for an organization running a food pantry, senior nutrition and financial assistance. We focused on its Salesforce instance: reducing friction at the point of service, tracking clients across repeat visits, and improving referrals between partner agencies.</p>
-        <p class="muted">Project Manager, UF AIS Consulting Committee. Sept to Nov 2026.</p>
-      </article>
+    <div class="pair">
       <article class="note">
         <h3>Grant discovery platform for Villages of Hope</h3>
         <p>A full-stack web app for a nonprofit supporting survivors of trafficking. Node.js and Python scrapers pull grants from 10+ federal, state and local sources into one searchable database, and new matches are emailed to stakeholders.</p>
