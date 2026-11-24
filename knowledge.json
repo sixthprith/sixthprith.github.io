@@ -1,0 +1,194 @@
+{
+  "_about": "Everything the map and the chatbot are allowed to know. One fact-cluster per chunk. If it is not in this file, the bot must say it does not know.",
+  "chunks": [
+    {
+      "id": "about-summary",
+      "group": "about",
+      "title": "Who I am",
+      "link": "#top",
+      "text": "Prithviksit Pakala is a solutions engineer who turns enterprise business problems into working AI systems. He has two years across the full pre-sales arc: discovery, demos, proofs of concept and RFPs, with hands-on delivery behind it."
+    },
+    {
+      "id": "about-availability",
+      "group": "about",
+      "title": "Availability and location",
+      "link": "#top",
+      "text": "Prithviksit is looking for AI solutions engineer roles and is available from May 2027, after finishing his master's degree. He is based in Gainesville, Florida."
+    },
+    {
+      "id": "about-contact",
+      "group": "about",
+      "title": "How to reach me",
+      "link": "#contact",
+      "text": "The best way to contact Prithviksit is by email at 6prithviksit@gmail.com or on LinkedIn at linkedin.com/in/prithviksit."
+    },
+    {
+      "id": "synergy-role",
+      "group": "experience",
+      "title": "AI Solutions Intern, Synergy Technologies",
+      "link": "#experience",
+      "text": "From May to August 2026 Prithviksit was an AI Solutions Intern at Synergy Technologies in Orlando, working on the assureagent.ai platform, which does behavioral testing for enterprise voice AI, IVR and chat agents."
+    },
+    {
+      "id": "synergy-demos",
+      "group": "experience",
+      "title": "Enterprise evaluation demos",
+      "link": "#experience",
+      "text": "At Synergy he designed and delivered technical evaluation demos for enterprise prospects including a global bank, a multi-trillion-dollar asset manager and a hotel group with thousands of properties. Each demo was built around a real failure and its catch, across touch-tone IVR, chat and agentic voice. One of these deals was won."
+    },
+    {
+      "id": "synergy-testing",
+      "group": "experience",
+      "title": "Synthetic-persona voice agent testing",
+      "link": "#experience",
+      "text": "He ran synthetic-persona test campaigns against live customer voice agents, varying caller intents, accents and moods, then isolated where each agent broke down and turned it into a finding the client could act on. This is AI evaluation and quality assurance work."
+    },
+    {
+      "id": "synergy-gtm",
+      "group": "experience",
+      "title": "Working with the CEO and CTO",
+      "link": "#experience",
+      "text": "He worked directly with the CEO and CTO on product strategy, go-to-market and brand, including repositioning the platform and designing the website."
+    },
+    {
+      "id": "cprime-presales",
+      "group": "experience",
+      "title": "Solution Design Consultant, Cprime",
+      "link": "#experience",
+      "text": "From June 2024 to August 2025 Prithviksit was a Solution Design Consultant in pre-sales at Cprime, a Goldman Sachs company, based in Hyderabad. He led proposals, RFP and RFI responses, live demos and MVP packages across multimillion-dollar pipeline opportunities, including an $800K healthcare engagement win."
+    },
+    {
+      "id": "cprime-knowledge",
+      "group": "experience",
+      "title": "Proposal reference system",
+      "link": "#experience",
+      "text": "At Cprime he built a central reference system from more than 250 past projects, cutting proposal preparation and vendor-assessment timelines by about 50 percent."
+    },
+    {
+      "id": "cprime-ai-coe",
+      "group": "experience",
+      "title": "AI Center of Excellence",
+      "link": "#experience",
+      "text": "He was a core contributor to Cprime's AI Center of Excellence, shaping more than five agentic AI and automation use cases and presenting them to enterprise clients. He also designed pre-packaged ServiceNow solutions for HR service delivery, IT service management and retail operations, and acted as technical liaison across teams in Australia, India and the United States."
+    },
+    {
+      "id": "inry-virtual-agents",
+      "group": "experience",
+      "title": "ServiceNow Technical Consultant",
+      "link": "#experience",
+      "text": "From August 2023 to June 2024 he was a ServiceNow Technical Consultant intern at Cprime, formerly INRY, working full-time hours alongside his final undergraduate year. He designed and implemented NLP-powered virtual agents and workflow automations for HR and IT, reducing service resolution times by up to 60 percent, and led system validation and QA testing."
+    },
+    {
+      "id": "l5-analyst",
+      "group": "experience",
+      "title": "Business Analyst, L5.ai",
+      "link": "#experience",
+      "text": "From March to August 2023 he was a Business Analyst and low-code developer intern at L5.ai. He delivered turnkey ClickUp workspaces on a one-week cycle for more than ten organizations in education, faith, nonprofit and healthcare, cutting administrative workload by more than 50 percent on average."
+    },
+    {
+      "id": "project-skywatch",
+      "group": "project",
+      "title": "Sky Watch",
+      "link": "sky-watch.html",
+      "text": "Sky Watch is a live map Prithviksit built that tracks rocket launches and airshows within driving distance of Gainesville and Orlando. It shows a countdown, the compass bearing and distance to each event, and live sky conditions. It uses JavaScript, Leaflet, the Launch Library 2 API and National Weather Service data, and costs nothing to host."
+    },
+    {
+      "id": "project-skywatch-engineering",
+      "group": "project",
+      "title": "Sky Watch engineering decisions",
+      "link": "sky-watch.html",
+      "text": "On Sky Watch, the first-choice weather API blocked browser requests, so he switched to the National Weather Service and fetches eleven stations in parallel. Airshows have no API, so he curates them in a JSON file. Because a static site cannot send notifications, a GitHub Action rebuilds a calendar feed with Python every six hours."
+    },
+    {
+      "id": "project-intake",
+      "group": "project",
+      "title": "Nonprofit Salesforce and client intake redesign",
+      "link": "#projects",
+      "text": "From September to November 2026 he was Project Manager on a pro bono UF AIS consulting engagement for a Jacksonville nonprofit that runs a food pantry, senior nutrition and financial assistance. The engagement focused on the nonprofit's Salesforce instance: reducing friction at the point of service, tracking clients across repeat visits and improving referrals between partner agencies."
+    },
+    {
+      "id": "project-grants",
+      "group": "project",
+      "title": "Grant discovery platform",
+      "link": "#projects",
+      "text": "He built a full-stack grant discovery web app for Villages of Hope, a nonprofit supporting survivors of trafficking. Node.js and Python scrapers pull grants from more than ten federal, state and local sources into one searchable SQLite database of over 1,500 funding opportunities, and new matches are emailed to stakeholders."
+    },
+    {
+      "id": "project-aquaponics",
+      "group": "project",
+      "title": "Aquaponics sensor monitoring",
+      "link": "#projects",
+      "text": "For his undergraduate final project he instrumented a working commercial aquaponics farm with ESP32 sensors, a Firebase dashboard and automated alerts. Python and machine learning on the sensor history raised crop yield by 30 percent and cut fish mortality by 25 percent."
+    },
+    {
+      "id": "skills-ai",
+      "group": "skill",
+      "title": "AI and conversational systems",
+      "link": "#skills",
+      "text": "AI skills: prompt engineering, LLM application fundamentals, conversational AI and voice-agent design, NLP virtual agents, agentic AI use-case design, and AI behavioral testing and evaluation."
+    },
+    {
+      "id": "skills-se",
+      "group": "skill",
+      "title": "Solutions engineering",
+      "link": "#skills",
+      "text": "Solutions engineering skills: discovery and requirements gathering, technical demos and proofs of concept, RFP and RFI response, solution narratives and pitch decks, competitive analysis and executive communication."
+    },
+    {
+      "id": "skills-platforms",
+      "group": "skill",
+      "title": "Platforms and tools",
+      "link": "#skills",
+      "text": "Platforms and tools: ServiceNow including HRSD, ITSM, Virtual Agent and custom apps, plus ClickUp, Power BI, Excel, Firebase, Synthesia, Claude and ChatGPT."
+    },
+    {
+      "id": "skills-code",
+      "group": "skill",
+      "title": "Programming and data",
+      "link": "#skills",
+      "text": "Programming and data skills: Python, JavaScript and Node.js, SQL and SQLite, HTML and CSS, data visualization, machine learning fundamentals and IoT integration."
+    },
+    {
+      "id": "skills-governance",
+      "group": "skill",
+      "title": "Governance and compliance",
+      "link": "#skills",
+      "text": "Governance skills: IT General Controls, compliance and security documentation, and SOC 2 and HIPAA readiness."
+    },
+    {
+      "id": "skills-languages",
+      "group": "skill",
+      "title": "Languages",
+      "link": "#skills",
+      "text": "He speaks English fluently, Hindi and Telugu natively, and French at an intermediate level."
+    },
+    {
+      "id": "edu-uf",
+      "group": "education",
+      "title": "MS at the University of Florida",
+      "link": "#education",
+      "text": "Prithviksit is studying for an MS in Information Systems and Operations Management with a data science concentration at the University of Florida's Hough Graduate School of Business. His GPA is 3.80 and he expects to graduate in May 2027."
+    },
+    {
+      "id": "edu-campus",
+      "group": "education",
+      "title": "Teaching assistant and campus involvement",
+      "link": "#education",
+      "text": "At UF he is a Graduate Teaching Assistant for the systems analysis and design courses ISM 6128 and ISM 6129, including their generative AI material. He is an ISOM Ambassador for the Information Systems and Operations Management program, and a former Vice President of Marketing for the UF Association for Information Systems."
+    },
+    {
+      "id": "edu-btech",
+      "group": "education",
+      "title": "BTech in Computer Science",
+      "link": "#education",
+      "text": "He holds a BTech in Computer Science and Engineering from JNTU Hyderabad, GRIET, completed in 2024. There he was Vice Secretary of the Computer Society, hosted TEDxGRIET and more than 25 events, and edited the college magazine."
+    },
+    {
+      "id": "edu-certs",
+      "group": "education",
+      "title": "Certifications",
+      "link": "#education",
+      "text": "Certifications: the Applied Generative AI Specialization from Michigan Engineering Professional Education, completed in 2026, and the ServiceNow Certified System Administrator, in progress."
+    }
+  ]
+}
